@@ -1,0 +1,52 @@
+#!/bin/sh
+
+# This assumes you have:
+# 1) The 'iptables' package installed (provides '/sbin/iptables').
+# 2) An iptables dump (created by '/sbin/iptables-save') saved in <%= IPTABLESRC %>.
+#
+### BEGIN INIT INFO
+# Provides: iptables
+# Required-Start: $all
+# Required-Stop: $all
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: loads saved iptables rules
+# Description: loads saved iptables rules
+### END INIT INFO
+
+
+[ ! -f <%= IPTABLESRC %> ] && {
+  echo "Please create initial firewall rules with '$(which iptables-save) > <%= IPTABLESRC %>'"
+  exit 1
+}
+
+start()
+{
+  echo "loading firewall rules from <%= IPTABLESRC %>..."
+  iptables-restore < <%= IPTABLESRC %>
+}
+
+stop()
+{
+  echo "resetting firewall to safe defaults..."
+  for chain in INPUT OUTPUT FORWARD; do
+    iptables -P ${chain} ACCEPT
+    iptables -F ${chain}
+  done
+  for chain in PREROUTING POSTROUTING; do
+    iptables -t nat -P ${chain} ACCEPT
+    iptables -t nat -F ${chain}
+  done
+}
+
+case $1 in
+start)
+  start
+  ;;
+stop)
+  stop
+  ;;
+*)
+  echo "Usage: $0 start | stop"
+  ;;
+esac

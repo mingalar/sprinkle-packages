@@ -4,16 +4,15 @@
 # including its installer type (eg. apt, source, gem, etc).
 # Packages can have relationships to each other via dependencies
 
-require_relative '../packages/helper'
-require_relative '../packages/debian/apt_enable_auto_upgrades.rb'
-require_relative '../packages/debian/apt_update_index'
-require_relative '../packages/debian/apt_upgrade'
+require_relative './minimal'
+require_relative '../packages/debian/rsync'
+require_relative '../packages/debian/iptables'
 
 # Sprinkle Policies
 # Names a group of packages (optionally with versions) that apply to a particular set of roles.
 
-policy :minimal, :roles => :app do
-  requires :distro_package_reindex
-  requires :distro_package_upgrade
-  requires :distro_auto_update
+policy :admintools, :roles => :app do
+  requires :rsync
+  requires :iptables
+  requires :iptables_init_d if config(:IPTABLES_INIT_D)
 end
