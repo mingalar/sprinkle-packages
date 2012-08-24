@@ -1,5 +1,8 @@
 source "http://rubygems.org"
 
+# To load environment variables from .env
+gem "dotenv", "~> 0.1.1"
+
 # ActiveSupport dependency also requires i18n
 gem "i18n", "~> 0.6.0"
 

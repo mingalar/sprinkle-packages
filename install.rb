@@ -3,6 +3,10 @@
 # Setup code
 #  Code to run on the local system before Sprinkle.
 
+#  Load environment variables from ENV['CONFIGENV'] or config.env if any.
+require 'dotenv'
+Dotenv.load(ENV['CONFIGENV'] || 'config.env')
+
 #  This gets the name of the target system from the command-line
 TARGET = ARGV.first
 

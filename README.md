@@ -41,6 +41,12 @@ To run multiple recipes on the target system:
 
     sprinkle -s install.rb <target_address> <email_address> <remote_account> <recipe_name1> ... <recipe_namen>
 
+Please note that some recipes may read configuration from the environment.
+Even if it is possible to inject environment variables by hand it is better to use a `config.env` file.
+To use alternate environment files, supply the filename in the `CONFIGENV` environment variable:
+
+    CONFIGENV=myconfig.env sprinkle -s install.rb myserver.mydomain.com me@mydomain.com deploy myrecipe
+
 To see the options for Sprinkle:
 
     sprinkle --help

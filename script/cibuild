@@ -5,5 +5,5 @@ set -e
 bundle install --path .bundle
 
 # run test policy with sprinkle -t (test mode)
-bundle exec sprinkle -t -s install.rb testing.host root@testing.host deploy minimal
-
+allrecipes=$(find recipes -type f -a -name  \*.rb -exec basename {} .rb \;)
+CONFIGENV=config.env.sample bundle exec sprinkle -t -s install.rb testing.host root@testing.host deploy ${allrecipes}
