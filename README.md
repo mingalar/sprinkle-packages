@@ -37,9 +37,9 @@ For example:
 
 This connects to the target with SSH, logs in as the user `deploy`, and immediately applies the recipe.
 
-To run a different recipe on the target system:
+To run multiple recipes on the target system:
 
-    sprinkle -s install.rb <target_address> <email_address> <remote_account> <recipe_name>
+    sprinkle -s install.rb <target_address> <email_address> <remote_account> <recipe_name1> ... <recipe_namen>
 
 To see the options for Sprinkle:
 
