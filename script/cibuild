@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+bundle install --path .bundle
+
+# run test policy with sprinkle -t (test mode)
+bundle exec sprinkle -t -s install.rb testing.host root@testing.host deploy minimal
+
