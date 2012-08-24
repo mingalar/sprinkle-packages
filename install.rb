@@ -16,9 +16,15 @@ ACCOUNT = ARGV[2] || 'deploy'
 RECIPES = ARGV[3..-1]
 RECIPES << 'minimal' if RECIPES.empty?
 
-# require_relative doesn't work in this context
+# Load the specified recipes
+recipe_dir = File.join(File.dirname(__FILE__), 'recipes')
+valid_recipes = Dir.glob(File.join(recipe_dir, '*.rb')).collect { |e| File.basename(e, '.rb') }
 RECIPES.each do |recipe|
-  require File.join(File.dirname(__FILE__), 'recipes', recipe)
+  unless valid_recipes.include?(recipe)
+    raise ArgumentError, "Invalid recipe #{recipe.inspect}, not in #{valid_recipes.inspect}"
+  end
+  # require_relative doesn't work in this context
+  require File.join(recipe_dir, recipe)
 end
 
 # Sprinkle Deployment
