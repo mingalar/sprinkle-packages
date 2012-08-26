@@ -1,7 +1,7 @@
 package :iptables do
   description "iptables firewall"
 
-  optional :iptable_init_d
+  optional :iptables_init_d
 
   apt 'iptables'
 
@@ -12,7 +12,6 @@ end
 
 package :iptables_init_d do
   description "init script for iptables"
-  requires :iptables
 
   initscript = '/etc/init.d/iptables'
   IPTABLESRC = config(:IPTABLES_CONF, :default => '/etc/iptables.conf', :required => true)
