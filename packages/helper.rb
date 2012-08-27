@@ -6,8 +6,8 @@ def config(name, opts={})
   default, required, regexp = opts[:default], opts[:required], opts[:regexp]
   val = ENV[name.to_s] || default
   raise ArgumentError, "expected value for #{name}" unless val || !required
-  if regexp && val && !regexp.match?(val)
-    raise "value for #{name} [#{val.inspect}] is invalid"
+  if regexp && val && !regexp.match(val)
+    raise "invalid value for #{name}: #{val.inspect}"
   end
   val
 end
