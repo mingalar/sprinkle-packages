@@ -14,7 +14,7 @@ TARGET = ARGV.first
 ADMIN_EMAIL = ARGV[1] || 'root@localhost'
 
 # The name of the user account on the remote system, default to "deploy"
-ACCOUNT = ARGV[2] || 'deploy'
+ACCOUNT = (ARGV[2] || 'deploy').strip
 
 unless TARGET && ADMIN_EMAIL && ACCOUNT
   puts "Usage: bundle exec sprinkle -s #{File.basename(__FILE__)} " \
@@ -60,6 +60,12 @@ deployment do
     set :user, ACCOUNT
     role :app, TARGET
 
+    # since some sprinkle installers (push_text, replace_text especially) do
+    # not use capistrano sudo password prompt, hack capistrano to use default
+    # sudo prompt (it may work since we know deploy user) and hope  capistrano
+    # will catch most sudo password requests.
+    # see https://github.com/crafterm/sprinkle/issues/42
+    set :sudo_prompt, "[sudo] password for #{ACCOUNT}:"
   end
 
 end
