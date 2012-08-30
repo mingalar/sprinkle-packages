@@ -1,0 +1,4 @@
+// Created by Sprinkle <%= Time.now.strftime('%d %B %Y %H:%M') %>
+Acquire::http::Proxy "http://<%= apt_proxy_host %>:<%= apt_proxy_port %>/";
+Acquire::ftp::Proxy "http://<%= apt_proxy_host %>:<%= apt_proxy_port %>/";
+Acquire::https::Proxy "http://<%= apt_proxy_host %>:<%= apt_proxy_port %>/";
