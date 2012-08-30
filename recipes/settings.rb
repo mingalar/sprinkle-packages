@@ -6,6 +6,7 @@
 
 require_relative './minimal'
 require_relative '../packages/debian/hostname'
+require_relative '../packages/debian/openssh'
 require_relative '../packages/debian/vim'
 
 # Sprinkle Policies
@@ -13,5 +14,7 @@ require_relative '../packages/debian/vim'
 
 policy :settings, :roles => :app do
   requires :hostname
+  requires :openssh_authorized_keys if config(:OPENSSH_AUTHORIZED_KEYS)
+  requires :openssh_disable_password_authentication if config(:OPENSSH_DISABLE_PASSWORD_AUTHENTICATION)
   requires :vim_system_vimrc if config(:VIM_SYSTEM_VIMRC)
 end

@@ -23,6 +23,11 @@ unless TARGET && ADMIN_EMAIL && ACCOUNT
   exit(1)
 end
 
+# set ENV['OPENSSH_USER_ACCOUNT'] for the openssh_public_keys package. we need
+# this workaround as pre/post install hooks are run with Capistrano use_sudo by
+# default and we want to import authorized_keys for #{ACCOUNT} not for root.
+ENV['OPENSSH_USER_ACCOUNT'] = ACCOUNT
+
 # Recipe list, default to "minimal"
 RECIPES = Array(ARGV[3..-1])
 RECIPES << 'minimal' if RECIPES.empty?

@@ -5,6 +5,7 @@
 # Packages can have relationships to each other via dependencies
 
 require_relative './minimal'
+require_relative '../packages/debian/openssh'
 require_relative '../packages/debian/rsync'
 require_relative '../packages/debian/iptables'
 
@@ -12,6 +13,7 @@ require_relative '../packages/debian/iptables'
 # Names a group of packages (optionally with versions) that apply to a particular set of roles.
 
 policy :admintools, :roles => :app do
+  requires :openssh
   requires :rsync
   requires :iptables
   requires :iptables_init_d if config(:IPTABLES_INIT_D)
