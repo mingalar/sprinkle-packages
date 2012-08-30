@@ -6,10 +6,12 @@
 
 require_relative './minimal'
 require_relative '../packages/debian/hostname'
+require_relative '../packages/debian/vim'
 
 # Sprinkle Policies
 # Names a group of packages (optionally with versions) that apply to a particular set of roles.
 
 policy :settings, :roles => :app do
   requires :hostname
+  requires :vim_system_vimrc if config(:VIM_SYSTEM_VIMRC)
 end

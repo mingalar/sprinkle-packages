@@ -1,8 +1,6 @@
 package :vim do
   description "vim"
 
-  optional :vim_system_vimrc
-
   apt 'vim'
 
   verify do
@@ -12,6 +10,8 @@ end
 
 package :vim_system_vimrc do
   description "installs systemwide /etc/vimrc"
+
+  requires :vim
 
   systemvimrc = '/etc/vim/vimrc.local'
   vimrcsrc = File.join(File.dirname(__FILE__), 'resources', 'vimrc')

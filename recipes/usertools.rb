@@ -18,5 +18,4 @@ policy :usertools, :roles => :app do
   requires :wget
   requires :ntp
   requires :vim
-  requires :vim_system_vimrc if config(:VIM_SYSTEM_VIMRC)
 end
