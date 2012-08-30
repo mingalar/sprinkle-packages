@@ -14,9 +14,10 @@ package :iptables_init_d do
   description "init script for iptables"
 
   initscript = '/etc/init.d/iptables'
-  IPTABLESRC = config(:IPTABLES_CONF, :default => '/etc/iptables.conf', :required => true)
+  iptablesrc = config(:IPTABLES_CONF, :default => '/etc/iptables.conf', :required => true)
 
-  transfer File.join(File.dirname(__FILE__), 'resources', 'iptables.erb'), "/tmp/iptables", :render => true, :sudo => true do
+  transfer File.join(File.dirname(__FILE__), 'resources', 'iptables.erb'), "/tmp/iptables",
+           :render => true, :locals => {:iptablesrc => iptablesrc}, :sudo => true do
     post :install, "mv /tmp/iptables #{initscript}"
     post :install, "chmod +x #{initscript}"
     post :install, "update-rc.d #{File.basename(initscript)} defaults"
@@ -24,6 +25,6 @@ package :iptables_init_d do
 
   verify do
     has_executable initscript
-    file_contains initscript, IPTABLESRC
+    file_contains initscript, iptablesrc
   end
 end

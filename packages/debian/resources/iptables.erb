@@ -2,7 +2,7 @@
 
 # This assumes you have:
 # 1) The 'iptables' package installed (provides '/sbin/iptables').
-# 2) An iptables dump (created by '/sbin/iptables-save') saved in <%= IPTABLESRC %>.
+# 2) An iptables dump (created by '/sbin/iptables-save') saved in <%= iptablesrc %>.
 #
 ### BEGIN INIT INFO
 # Provides: iptables
@@ -15,15 +15,15 @@
 ### END INIT INFO
 
 
-[ ! -f <%= IPTABLESRC %> ] && {
-  echo "Please create initial firewall rules with '$(which iptables-save) > <%= IPTABLESRC %>'"
+[ ! -f <%= iptablesrc %> ] && {
+  echo "Please create initial firewall rules with '$(which iptables-save) > <%= iptablesrc %>'"
   exit 1
 }
 
 start()
 {
-  echo "loading firewall rules from <%= IPTABLESRC %>..."
-  iptables-restore < <%= IPTABLESRC %>
+  echo "loading firewall rules from <%= iptablesrc %>..."
+  iptables-restore < <%= iptablesrc %>
 }
 
 stop()
