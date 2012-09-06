@@ -8,6 +8,7 @@ require_relative './minimal'
 require_relative '../packages/debian/vim'
 require_relative '../packages/debian/git'
 require_relative '../packages/debian/mysql' if config(:LIBMYSQL_DEV)
+require_relative '../packages/debian/mongo' if config(:LIBMONGO_DEV)
 
 # Sprinkle Policies
 # Names a group of packages (optionally with versions) that apply to a particular set of roles.
@@ -16,4 +17,5 @@ policy :devtools, :roles => :app do
   requires :vim
   requires :git
   requires :libmysqlclient_dev if config(:LIBMYSQL_DEV)
+  requires :libmongoclient_dev if config(:LIBMONGO_DEV)
 end
