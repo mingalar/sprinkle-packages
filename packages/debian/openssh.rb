@@ -23,14 +23,14 @@ package :openssh_disable_password_authentication do
   verify do
     file_contains sshd_config, '^PasswordAuthentication no'
   end
-end
+end if config(:OPENSSH_AUTHORIZED_KEYS)
 
 package :openssh_authorized_keys do
   description "Installs default OpenSSH authorized_keys for deploy_account (not for root)"
 
   deploy_account = config(:OPENSSH_USER_ACCOUNT, :required => true) # set in install.rb
   authorized_keys = "~#{deploy_account}/.ssh/authorized_keys"
-  authorized_keys_src = config(:OPENSSH_AUTHORIZED_KEYS, :required => true, :default => authorized_keys)
+  authorized_keys_src = config(:OPENSSH_AUTHORIZED_KEYS)
 
   template = File.join(File.dirname(__FILE__), 'resources', 'authorized_keys.txt.erb')
   authorized_keys_content = File.read(File.expand_path(authorized_keys_src)).strip
@@ -49,4 +49,4 @@ package :openssh_authorized_keys do
     file_contains authorized_keys, "^# Begin Sprinkle block #{timestamp}$"
     file_contains authorized_keys, "^# End Sprinkle block #{timestamp}$"
   end
-end
+end if config(:OPENSSH_AUTHORIZED_KEYS)
