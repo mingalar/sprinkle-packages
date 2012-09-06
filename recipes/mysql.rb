@@ -5,15 +5,12 @@
 # Packages can have relationships to each other via dependencies
 
 require_relative './minimal'
-require_relative '../packages/debian/vim'
-require_relative '../packages/debian/git'
-require_relative '../packages/debian/mysql' if config(:LIBMYSQL_DEV)
+require_relative '../packages/debian/mysql'
 
 # Sprinkle Policies
 # Names a group of packages (optionally with versions) that apply to a particular set of roles.
 
-policy :devtools, :roles => :app do
-  requires :vim
-  requires :git
-  requires :libmysqlclient_dev if config(:LIBMYSQL_DEV)
+policy :mysql, :roles => :app do
+  requires :mysql_client_55
+  requires :mysql_server_55
 end
