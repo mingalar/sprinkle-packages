@@ -10,6 +10,7 @@ require_relative '../packages/debian/git'
 require_relative '../packages/debian/mysql' if config(:LIBMYSQL_DEV)
 require_relative '../packages/debian/mongo' if config(:LIBMONGO_DEV)
 require_relative '../packages/debian/rabbitmq' if config(:LIBRABBITMQ_DEV)
+require_relative '../packages/debian/xml' if config(:LIBXML_DEV) || config(:LIBXSLT_DEV)
 
 # Sprinkle Policies
 # Names a group of packages (optionally with versions) that apply to a particular set of roles.
@@ -20,4 +21,6 @@ policy :devtools, :roles => :app do
   requires :libmysqlclient_dev if config(:LIBMYSQL_DEV)
   requires :libmongoclient_dev if config(:LIBMONGO_DEV)
   requires :librabbitmq_dev if config(:LIBRABBITMQ_DEV)
+  requires :libxml_dev if config(:LIBXML_DEV)
+  requires :libxslt_dev if config(:LIBXSLT_DEV)
 end
