@@ -12,4 +12,6 @@ require_relative '../packages/debian/rabbitmq'
 
 policy :rabbitmq, :roles => :app do
   requires :rabbitmq_server
+  requires :rabbitmq_management if config(:RABBITMQ_PLUGIN_MANAGEMENT)
+  requires :rabbitmq_stomp if config(:RABBITMQ_PLUGIN_STOMP)
 end
